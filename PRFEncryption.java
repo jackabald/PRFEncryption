@@ -1,23 +1,22 @@
 import java.util.Hashtable;
 
 public class PRFEncryption{
-    private String message; // must be letters a-z, no numbers or symbols
-    private Hashtable PRF;
+    private static Hashtable<Character,Character> PRF = new Hashtable<Character,Character>();
 
-    public PRFEncryption(String message){
-        this.message = message.toLowerCase();
-    }
-    public static String Encrypt(String message){
-        String Ciphertext;
-        for(int i = 0; i < message.length; i++){
-            char key = message.charAt(i)
+    public String Encrypt(String message){
+        String ciphertext = "";
+        for(int i = 0; i < message.length(); i++){
+            char key = message.charAt(i);
             if(PRF.containsKey(key)){
-                Ciphertext += PRF.get(key);
+                ciphertext += PRF.get(key);
             }
             int num = (int)(Math.random() * 26);
             char value = numToValue(num); // need to make sure value is not stored in PRF, cant map different keys to same value
 
         }
+    }
+    public String Decrypt(String ciphertext){
+
     }
     public static char numToValue(int index){
         char value = 'a';
@@ -73,5 +72,6 @@ public class PRFEncryption{
             value = 'y';
         if(index == 25)
             value = 'z';
+        return value;
     }
 }
