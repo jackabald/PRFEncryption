@@ -3,7 +3,7 @@ import java.util.Hashtable;
 public class PRFEncryption{
     private static Hashtable<Character,Character> PRF = new Hashtable<Character,Character>();
 
-    public String Encrypt(String message){
+    public String Encrypt(String message) throws IllegalArgumentException{
         String ciphertext = "";
         for(int i = 0; i < message.length(); i++){
             char key = message.charAt(i);
@@ -11,12 +11,30 @@ public class PRFEncryption{
                 ciphertext += PRF.get(key);
             }
             int num = (int)(Math.random() * 26);
-            char value = numToValue(num); // need to make sure value is not stored in PRF, cant map different keys to same value
-
+            char value = findRandomValue(num);
+            if(value == 0){
+                throw new IllegalArgumentException("All keys have mappings already(You can only encrypt a-z, lower-case, with no symbols)");
+            }
+            PRF.put(key,value);
+            ciphertext += value;
         }
+        return ciphertext;
     }
+    
     public String Decrypt(String ciphertext){
 
+    }
+    public char findRandomValue(int num){
+        if(!PRF.contains(numToValue(num))){
+            return numToValue(numToValue(num));
+        }else{
+            num++;
+            if(num > 25){
+                num = 0;
+            }
+            findRandomValue(num);
+        }
+        return 0; // returns 0 if all characters have mappings
     }
     public static char numToValue(int index){
         char value = 'a';
