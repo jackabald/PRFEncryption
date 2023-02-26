@@ -11,4 +11,7 @@ public class PRFEncryptionTester{
         String message_2 = PRFScheme.Decrypt(ciphertext);
         assertEquals(message, message_2);
     }
+    public static void main(String[] args){
+        
+    }
 }

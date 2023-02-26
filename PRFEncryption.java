@@ -22,7 +22,16 @@ public class PRFEncryption{
     }
     
     public String Decrypt(String ciphertext){
-
+        String message = "";
+        for(int i = 0; i < ciphertext.length(); i++){
+            char value = ciphertext.charAt(i);
+            for(char key : PRF.keySet()){
+                if(PRF.get(key) == value){
+                    message += key;
+                }
+            }
+        }
+        return message;
     }
     public char findRandomValue(int num){
         if(!PRF.contains(numToValue(num))){
